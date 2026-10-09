@@ -1,31 +1,81 @@
 using UnityEngine;
-
-[RequireComponent(typeof(Rigidbody2D))]
-public class AutoForward2D : MonoBehaviour
+public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 3f; // �ړ����x�i�P��: m/s�j
-    [SerializeField] private Vector2 direction = Vector2.right; // �i�s�����i�E�����j
-
-    private Rigidbody2D rb;
-
-    void Awake()
+    public float speed = 5.0f; //速度
+    bool wallHit = false;
+    Vector2 wallDir;
+    Rigidbody2D rb;
+    void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        // Rigidbody2D �̐ݒ�i�������������肳����j
-        rb.gravityScale = 0f; // �d�͂𖳌���
-        rb.freezeRotation = true; // ��]���Œ�
     }
-
-    void FixedUpdate()
+    void Update()
     {
-        // ��葬�x�ňړ�
-        rb.linearVelocity = direction.normalized * moveSpeed;
+        Vector2 normalDir;
+        if (Input.GetMouseButton(0))
+        {
+            normalDir = Quaternion.Euler(0, 0, 45) * Vector2.up;
+        }
+        else
+        {
+            normalDir = Quaternion.Euler(0, 0, -45) * Vector2.up;
+        }
+        if (wallHit)
+        {
+            transform.up = wallDir;
+        }
+        else
+        {
+            transform.up = normalDir;
+        }
+        transform.position += transform.up * speed * Time.deltaTime;
     }
-
-    // �i�s�������O������ύX����֐��i��F�ǂɓ��������甽�]�Ȃǁj
-    public void SetDirection(Vector2 newDirection)
+    void OnCollisionStay2D(Collision2D collision)
     {
-        direction = newDirection.normalized;
+        if (!collision.gameObject.CompareTag("Wall"))
+        {
+            return;
+        }
+        Vector2 normal = collision.contacts[0].normal;
+        if (normal.y < -0.7f)
+        {
+            Die();
+            return;
+        }
+        Vector2 normalDir;
+        if (Input.GetMouseButton(0))
+        {
+            normalDir = Quaternion.Euler(0, 0, 45) * Vector2.up;
+        }
+        else
+        {
+            normalDir = Quaternion.Euler(0, 0, -45) * Vector2.up;
+        }
+        float wallInput = Vector2.Dot(normalDir, normal);
+        if (wallInput < 0)
+        {
+            wallDir = new Vector2(-normal.y, normal.x);
+            if (wallDir.y < 0)
+            {
+                wallDir = -wallDir;
+            }
+            wallHit = true;
+        }
+        else
+        {
+            wallHit = false;
+        }
+    }
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            wallHit = false;
+        }
+    }
+    void Die()
+    {
+        Debug.Log("GAME OVER");
+        enabled = false;
     }
 }
