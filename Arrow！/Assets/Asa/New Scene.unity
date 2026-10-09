@@ -149,10 +149,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgrounds:
-  - {fileID: 763862628425416716, guid: 43c507137b651b44486b62e6c50aee6d, type: 3}
-  - {fileID: 3552199034426834868, guid: 684485ed9da82c143a90d4e7a9ebf260, type: 3}
-  - {fileID: 3307641431145586099, guid: 6e46c52711b16514d95752566851e0bb, type: 3}
-  blockHeight: 20
+  - {fileID: 6882168304369843420, guid: 3f40fe795ebc93449ba02c2e8340a491, type: 3}
+  - {fileID: 6882168304369843420, guid: f8d3ac51d16b81f42b3f808d399f451b, type: 3}
+  blockHeight: 10
   startCount: 5
 --- !u!4 &889430475
 Transform:
