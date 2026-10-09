@@ -1,35 +1,31 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMove : MonoBehaviour
+public class AutoForward2D : MonoBehaviour
 {
-    public float speed = 5.0f;  //速度
+    [SerializeField] private float moveSpeed = 3f; // �ړ����x�i�P��: m/s�j
+    [SerializeField] private Vector2 direction = Vector2.right; // �i�s�����i�E�����j
 
-    private void Update()
+    private Rigidbody2D rb;
+
+    void Awake()
     {
+        rb = GetComponent<Rigidbody2D>();
 
-        //マウス押してるか押してないかの処理
-        if (Input.GetMouseButton(0)) //押してるとき
-        {
-            //transformでZを45度回転
-            transform.rotation = Quaternion.Euler(0, 0, 45);
-
-            //確認用ログ
-            Debug.Log("押してる");    
-        }
-        else　　　　　　　　　　　　//押してないとき
-        {
-            //transformでZを-45度回転
-            transform.rotation = Quaternion.Euler(0, 0,-45);
-
-            //確認用ログ
-            Debug.Log("押してない"); 
-        }
-
-        //一定速度で上に進む
-        //transform.position += Vector3.up * speed * Time.deltaTime;    (旧)Vector3.upだと向きを変えても関係なく真上にしか進まない
-        transform.position += transform.up * speed * Time.deltaTime;    //Vectorをtransformに変更
+        // Rigidbody2D �̐ݒ�i�������������肳����j
+        rb.gravityScale = 0f; // �d�͂𖳌���
+        rb.freezeRotation = true; // ��]���Œ�
     }
 
+    void FixedUpdate()
+    {
+        // ��葬�x�ňړ�
+        rb.linearVelocity = direction.normalized * moveSpeed;
+    }
 
+    // �i�s�������O������ύX����֐��i��F�ǂɓ��������甽�]�Ȃǁj
+    public void SetDirection(Vector2 newDirection)
+    {
+        direction = newDirection.normalized;
+    }
 }
