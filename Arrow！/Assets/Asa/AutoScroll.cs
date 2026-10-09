@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class CameraAutoScroll : MonoBehaviour
+public class AutoScroll : MonoBehaviour
 {
-    [SerializeField] private float scrollSpeed = 2f;
+    public float scrollSpeed = 5f;
 
     void Update()
     {
