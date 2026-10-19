@@ -250,6 +250,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  turnSpeed: 450
+  visual: {fileID: 1201096544}
 --- !u!58 &1201096546
 CircleCollider2D:
   m_ObjectHideFlags: 0

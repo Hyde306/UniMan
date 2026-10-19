@@ -2,33 +2,61 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     public float speed = 5.0f; //速度
+    public float turnSpeed = 450.0f;
+    public Transform visual;
     bool wallHit = false;
+    bool dead = false;
+    Vector2 moveDir;
     Vector2 wallDir;
     Rigidbody2D rb;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.freezeRotation = true;
     }
     void Update()
     {
-        Vector2 normalDir;
+        if (dead)
+        {
+            return;
+        }
+        Vector2 inputDir;
         if (Input.GetMouseButton(0))
         {
-            normalDir = Quaternion.Euler(0, 0, 45) * Vector2.up;
+            inputDir = Quaternion.Euler(0, 0, 45) * Vector2.up;
         }
         else
         {
-            normalDir = Quaternion.Euler(0, 0, -45) * Vector2.up;
+            inputDir = Quaternion.Euler(0, 0, -45) * Vector2.up;
         }
         if (wallHit)
         {
-            transform.up = wallDir;
+            moveDir = wallDir;
         }
         else
         {
-            transform.up = normalDir;
+            moveDir = inputDir;
         }
-        transform.position += transform.up * speed * Time.deltaTime;
+        float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg - 90.0f;
+        Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
+        if (visual != null)
+        {
+            visual.rotation = Quaternion.RotateTowards(
+                visual.rotation,
+                targetRotation,
+                turnSpeed * Time.deltaTime
+            );
+        }
+    }
+    void FixedUpdate()
+    {
+        if (dead)
+        {
+            return;
+        }
+        rb.MovePosition(
+            rb.position + moveDir * speed * Time.fixedDeltaTime
+        );
     }
     void OnCollisionStay2D(Collision2D collision)
     {
@@ -42,16 +70,16 @@ public class PlayerMove : MonoBehaviour
             Die();
             return;
         }
-        Vector2 normalDir;
+        Vector2 inputDir;
         if (Input.GetMouseButton(0))
         {
-            normalDir = Quaternion.Euler(0, 0, 45) * Vector2.up;
+            inputDir = Quaternion.Euler(0, 0, 45) * Vector2.up;
         }
         else
         {
-            normalDir = Quaternion.Euler(0, 0, -45) * Vector2.up;
+            inputDir = Quaternion.Euler(0, 0, -45) * Vector2.up;
         }
-        float wallInput = Vector2.Dot(normalDir, normal);
+        float wallInput = Vector2.Dot(inputDir, normal);
         if (wallInput < 0)
         {
             wallDir = new Vector2(-normal.y, normal.x);
@@ -75,7 +103,7 @@ public class PlayerMove : MonoBehaviour
     }
     void Die()
     {
+        dead = true;
         Debug.Log("GAME OVER");
-        enabled = false;
     }
 }
