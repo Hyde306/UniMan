@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class BackgroundManager : MonoBehaviour
 {
-    public GameObject[] backgrounds;
-
+     public GameObject[] backgrounds;
+    public DestroyBackground dest;
     public float blockHeight = 20f;
     public int startCount = 5;
 
@@ -22,12 +22,15 @@ public class BackgroundManager : MonoBehaviour
 
     public void SpawnBackground()
     {
+        
         int index = Random.Range(0, backgrounds.Length);
 
-        Instantiate(
+        GameObject spawnedBg = Instantiate(
             backgrounds[index],
             new Vector3(0, nextY, 0),
             Quaternion.identity);
+
+        dest.Dest_ObjList.Add(spawnedBg);
 
         nextY += blockHeight;
     }
