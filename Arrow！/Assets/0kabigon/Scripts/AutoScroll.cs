@@ -6,6 +6,6 @@ public class AutoScroll : MonoBehaviour
 
     void Update()
     {
-        transform.position += Vector3.up * scrollSpeed * Time.deltaTime;
+        transform.position -= Vector3.up * scrollSpeed * Time.deltaTime;
     }
 }
