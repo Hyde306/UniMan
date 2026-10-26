@@ -249,9 +249,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08c91ae1b4e81f444b0b770da17e11f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  turnSpeed: 450
-  visual: {fileID: 1201096544}
 --- !u!58 &1201096546
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -553,9 +550,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d49e9922ca4035441b45d8587cd21e6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1201096544}
-  z: 10
-  xLimit: 3
 --- !u!1 &1814664996
 GameObject:
   m_ObjectHideFlags: 0
