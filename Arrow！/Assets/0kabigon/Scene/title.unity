@@ -721,7 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fac04c270716264e96b35154fac57c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: 
+  sceneName: Sorokasunishi
 --- !u!114 &1345376038
 MonoBehaviour:
   m_ObjectHideFlags: 0

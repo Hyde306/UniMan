@@ -9,11 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/GameScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/3UMA/SampleK.unity
-    guid: 03fb32cb332d1f34f81b5d52c4cfafb3
-  - enabled: 1
-    path: Assets/3UMA/testscene.unity
-    guid: a05f0fb58b0273748b0ec37b8eaeca1a
+    path: Assets/0kabigon/Scene/Sorokasunishi.unity
+    guid: dee6346e0fc1fe844b37b96bda74f9db
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
