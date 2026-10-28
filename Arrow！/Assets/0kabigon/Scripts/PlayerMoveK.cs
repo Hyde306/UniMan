@@ -103,16 +103,4 @@ public class PlayerMoveK : MonoBehaviour
         dead = true;
         Debug.Log("GAME OVER");
     }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("衝突した: " + collision.gameObject.name);
-        Debug.Log("タグ: " + collision.gameObject.tag);
-
-        if (collision.gameObject.CompareTag("Obstacle"))
-        {
-            Debug.Log("Obstacleに衝突！プレイヤーを削除します");
-            Destroy(gameObject);
-        }
-    }
 }
