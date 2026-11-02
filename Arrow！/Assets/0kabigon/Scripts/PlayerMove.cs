@@ -28,10 +28,11 @@ public class PlayerMove : MonoBehaviour
         playerCollider = GetComponent<Collider2D>();
     }
 
+
     void Update()
     {
-        // スペースキーを押したら移動開始・方向反転
-        if (Input.GetKeyDown(directionKey))
+        // スペースキーまたはマウスの左クリックで移動開始・方向反転
+        if (Input.GetKeyDown(directionKey) || Input.GetMouseButtonDown(0))
         {
             if (!isMoving)
             {
@@ -46,6 +47,7 @@ public class PlayerMove : MonoBehaviour
             isBlocked = false;
         }
     }
+
 
     void FixedUpdate()
     {
