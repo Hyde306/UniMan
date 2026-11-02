@@ -4,8 +4,18 @@ public class InfiniteRotate : MonoBehaviour
 {
     [SerializeField] private float rotateSpeed = 180f;
 
+    private float angle;
+
+    void Start()
+    {
+        angle = transform.localEulerAngles.z;
+    }
+
     void Update()
     {
-        transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
+        angle += rotateSpeed * Time.deltaTime;
+
+        transform.localRotation =
+            Quaternion.Euler(0f, 0f, angle);
     }
 }
