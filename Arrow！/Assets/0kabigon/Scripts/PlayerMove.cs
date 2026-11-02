@@ -1,6 +1,15 @@
 
 using UnityEngine;
 
+// Inspectorで選択できる操作タイプ
+public enum PlayerInputType
+{
+    Space,      // スペースキー
+    LeftShift,  // 左Shiftキー
+    MouseLeft,  // マウス左クリック
+    MouseRight  // マウス右クリック
+}
+
 public class PlayerMove : MonoBehaviour
 {
     [Header("移動設定")]
@@ -8,8 +17,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float dashSpeed = 10f; // ダッシュ中の移動速度
 
     [Header("操作設定")]
-    [SerializeField] private KeyCode directionKey = KeyCode.Space; // 方向切り替えキー
-    [SerializeField] private KeyCode dashKey = KeyCode.LeftShift; // ダッシュキー
+    [SerializeField] private PlayerInputType directionKey = PlayerInputType.Space; // 移動・方向切り替え
+    [SerializeField] private PlayerInputType dashKey = PlayerInputType.LeftShift; // ダッシュ
 
     [Header("当たり判定設定")]
     [SerializeField] private LayerMask wallLayer; // 壁のレイヤー
@@ -28,11 +37,10 @@ public class PlayerMove : MonoBehaviour
         playerCollider = GetComponent<Collider2D>();
     }
 
-
     void Update()
     {
-        // スペースキーまたはマウスの左クリックで移動開始・方向反転
-        if (Input.GetKeyDown(directionKey) || Input.GetMouseButtonDown(0))
+        // 設定した操作で移動開始・方向反転
+        if (InputDown(directionKey))
         {
             if (!isMoving)
             {
@@ -47,7 +55,6 @@ public class PlayerMove : MonoBehaviour
             isBlocked = false;
         }
     }
-
 
     void FixedUpdate()
     {
@@ -91,10 +98,10 @@ public class PlayerMove : MonoBehaviour
             return;
         }
 
-        // Shiftキーを押している間はダッシュ速度にする
+        // 設定した操作を押している間はダッシュ速度にする
         float currentSpeed = moveSpeed;
 
-        if (Input.GetKey(dashKey) || Input.GetKey(KeyCode.RightShift))
+        if (InputHeld(dashKey))
         {
             currentSpeed = dashSpeed;
         }
@@ -104,6 +111,48 @@ public class PlayerMove : MonoBehaviour
             moveDirection * currentSpeed,
             rb.linearVelocity.y
         );
+    }
+
+    // キーまたはマウスボタンを押した瞬間を判定
+    private bool InputDown(PlayerInputType inputType)
+    {
+        switch (inputType)
+        {
+            case PlayerInputType.Space:
+                return Input.GetKeyDown(KeyCode.Space);
+
+            case PlayerInputType.LeftShift:
+                return Input.GetKeyDown(KeyCode.LeftShift);
+
+            case PlayerInputType.MouseLeft:
+                return Input.GetMouseButtonDown(0);
+
+            case PlayerInputType.MouseRight:
+                return Input.GetMouseButtonDown(1);
+        }
+
+        return false;
+    }
+
+    // キーまたはマウスボタンを押している間を判定
+    private bool InputHeld(PlayerInputType inputType)
+    {
+        switch (inputType)
+        {
+            case PlayerInputType.Space:
+                return Input.GetKey(KeyCode.Space);
+
+            case PlayerInputType.LeftShift:
+                return Input.GetKey(KeyCode.LeftShift);
+
+            case PlayerInputType.MouseLeft:
+                return Input.GetMouseButton(0);
+
+            case PlayerInputType.MouseRight:
+                return Input.GetMouseButton(1);
+        }
+
+        return false;
     }
 
     void OnDrawGizmosSelected()
