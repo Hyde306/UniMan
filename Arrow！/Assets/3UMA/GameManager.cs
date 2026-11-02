@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     private bool isPaused = false;
+    private int move_distance = 0;
 
     public enum GameState { Title,Play,Paused,Over};
 
@@ -14,14 +15,18 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        // インスタンスがまだ存在しない場合、このインスタンスを唯一のものとして設定
         if (instance == null)
         {
             instance = this;
+            // シーンをまたいでこのオブジェクトを維持する
             DontDestroyOnLoad(gameObject);
         }
+        // インスタンスが既に存在する場合、この新しいインスタンスは破棄する
         else
         {
             Destroy(gameObject);
+            return;
         }
 
         // 初期状態を設定
@@ -30,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int amout)
     {
-
+        if (currentState != GameState.Play) return;
     }
 
     public void ChangeState(GameState newState)
@@ -57,5 +62,10 @@ public class GameManager : MonoBehaviour
                 // ゲームオーバー処理
                 break;
         }
+    }
+
+    public void Distance(float _move)
+    {
+        move_distance = (int)_move;
     }
 }
