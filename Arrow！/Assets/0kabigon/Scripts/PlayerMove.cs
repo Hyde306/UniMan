@@ -24,12 +24,21 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private LayerMask wallLayer; // 壁のレイヤー
     [SerializeField] private float checkDistance = 0.05f; // 壁との判定距離
 
+    [Header("はじき設定")]
+    [SerializeField] private string targetTag = "Player"; // はじく対象のタグ
+    [SerializeField] private float knockbackForce = 5f; // 通常時のはじく強さ
+    [SerializeField] private float dashKnockbackForce = 12f; // ダッシュ中のはじく強さ
+    [SerializeField] private float knockbackDuration = 0.2f; // ノックバック継続時間
+
     private Rigidbody2D rb; // Rigidbody2D
     private Collider2D playerCollider; // プレイヤーの当たり判定
 
     private bool isMoving = false; // 移動中かどうか
     private bool isBlocked = false; // 壁に当たっているか
     private int moveDirection = 1; // 1なら右、-1なら左
+
+    private bool isKnockback = false; // ノックバック中かどうか
+    private float knockbackTimer = 0f; // ノックバック残り時間
 
     void Awake()
     {
@@ -61,6 +70,21 @@ public class PlayerMove : MonoBehaviour
         if (rb == null || playerCollider == null)
         {
             return;
+        }
+
+        // ノックバック中は通常の移動処理を停止
+        if (isKnockback)
+        {
+            knockbackTimer -= Time.fixedDeltaTime;
+
+            if (knockbackTimer <= 0f)
+            {
+                isKnockback = false;
+            }
+            else
+            {
+                return;
+            }
         }
 
         // 移動開始前は停止
@@ -153,6 +177,47 @@ public class PlayerMove : MonoBehaviour
         }
 
         return false;
+    }
+
+    // Playerタグのオブジェクトに当たったら横方向にはじく
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // 指定したタグ以外なら何もしない
+        if (!collision.gameObject.CompareTag(targetTag))
+        {
+            return;
+        }
+
+        // Rigidbody2Dがない場合は何もしない
+        if (rb == null)
+        {
+            return;
+        }
+
+        // ダッシュ中かどうかを判定
+        bool isDashing = InputHeld(dashKey);
+
+        // はじく強さを決定
+        float force = isDashing ? dashKnockbackForce : knockbackForce;
+
+        // 相手から離れる横方向を計算
+        float direction = transform.position.x < collision.transform.position.x ? -1f : 1f;
+
+        // 移動方向をノックバックした方向に切り替える
+        moveDirection = (int)direction;
+
+        // ノックバック中にする
+        isKnockback = true;
+        knockbackTimer = knockbackDuration;
+
+        // 横方向の速度をリセット
+        rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+
+        // 横方向にはじく
+        rb.AddForce(
+            Vector2.right * direction * force,
+            ForceMode2D.Impulse
+        );
     }
 
     void OnDrawGizmosSelected()
