@@ -28,8 +28,6 @@ public class DestroyBackground : MonoBehaviour
 
         if (back_posi + back_scale < cameraBottom)
         {
-            Debug.Log("back_posi:" + back_posi + back_scale);
-            Debug.Log("camera:" + cameraBottom);
             Destroy(Dest_ObjList[0]);
 
             Dest_ObjList.RemoveAt(0);
