@@ -7,9 +7,9 @@ public class GameOverTrigger : MonoBehaviour
     [SerializeField] private GameOverManager gameOverManager;
     [SerializeField] private string gameOverTag = "GameOver";
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (other.CompareTag(gameOverTag))
+        if (collision.gameObject.CompareTag(gameOverTag))
         {
             gameOverManager.GameOver();
         }
