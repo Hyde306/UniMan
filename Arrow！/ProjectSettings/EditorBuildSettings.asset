@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/0kabigon/Scene/Soroda.unity
     guid: dee6346e0fc1fe844b37b96bda74f9db
+  - enabled: 1
+    path: Assets/0kabigon/Scene/title.unity
+    guid: 3c0623b5df4075045b9e59b43cd61b3b
+  - enabled: 1
+    path: Assets/2asa/New.unity
+    guid: 6468cad677d0fe64383f08b516cee1dd
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
