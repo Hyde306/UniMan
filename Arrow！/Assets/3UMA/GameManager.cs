@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     public void AddScore(int amout)
     {
         if (currentState != GameState.Play) return;
+
+        Score = amout;
     }
 
     public void ChangeState(GameState newState)
@@ -68,5 +70,4 @@ public class GameManager : MonoBehaviour
     {
         move_distance += (int)_move;
     }
-
 }
