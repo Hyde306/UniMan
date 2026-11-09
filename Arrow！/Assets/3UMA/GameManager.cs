@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
 
     public void Distance(float _move)
     {
-        move_distance = (int)_move;
+        move_distance += (int)_move;
     }
+
 }
