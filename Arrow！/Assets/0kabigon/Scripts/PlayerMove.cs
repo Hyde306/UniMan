@@ -15,6 +15,7 @@ public class PlayerMove : MonoBehaviour
     [Header("移動設定")]
     [SerializeField] private float moveSpeed = 5f; // 通常の移動速度
     [SerializeField] private float dashSpeed = 10f; // ダッシュ中の移動速度
+    [SerializeField] private int startDirection = 1; // 初期方向（1なら右、-1なら左）
 
     [Header("操作設定")]
     [SerializeField] private PlayerInputType directionKey = PlayerInputType.Space; // 移動・方向切り替え
@@ -35,7 +36,7 @@ public class PlayerMove : MonoBehaviour
 
     private bool isMoving = false; // 移動中かどうか
     private bool isBlocked = false; // 壁に当たっているか
-    private int moveDirection = 1; // 1なら右、-1なら左
+    private int moveDirection; // 現在の移動方向
 
     private bool isKnockback = false; // ノックバック中かどうか
     private float knockbackTimer = 0f; // ノックバック残り時間
@@ -44,6 +45,9 @@ public class PlayerMove : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
+
+        // Inspectorで設定した初期方向を反映
+        moveDirection = startDirection >= 0 ? 1 : -1;
     }
 
     void Update()
