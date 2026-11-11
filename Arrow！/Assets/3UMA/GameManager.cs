@@ -1,11 +1,13 @@
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public TextMeshProUGUI distance;
 
     private bool isPaused = false;
-    private int move_distance = 0;
+    public int move_distance = 0;
 
     public enum GameState { Title,Play,Paused,Over};
 
@@ -69,5 +71,6 @@ public class GameManager : MonoBehaviour
     public void Distance(float _move)
     {
         move_distance += (int)_move;
+        distance.text = $"i‚ñ‚¾‹——£:{move_distance}m";
     }
 }
