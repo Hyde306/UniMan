@@ -239,11 +239,6 @@ namespace Yoshida.TestScene
 
         private void StartKnockback(Vector2 direction, float speed)
         {
-            if (Mathf.Abs(direction.x) >= 0.2f)
-            {
-                moveDirection = direction.x < 0f ? -1 : 1;
-            }
-
             knockbackDirection = direction;
             knockbackPeakSpeed = speed;
             knockbackElapsed = 0f;
