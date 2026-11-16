@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HorizontalMove : MonoBehaviour
+public class Right : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 3f;
 
