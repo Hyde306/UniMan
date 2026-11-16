@@ -35,6 +35,11 @@ public class GameManager : MonoBehaviour
         currentState = GameState.Title;
     }
 
+    private void Start()
+    {
+
+        distance.text = $"i‚ñ‚¾‹——£:{move_distance}m";
+    }
     public void AddScore(int amout)
     {
         if (currentState != GameState.Play) return;
@@ -71,6 +76,5 @@ public class GameManager : MonoBehaviour
     public void Distance(float _move)
     {
         move_distance += (int)_move;
-        distance.text = $"i‚ñ‚¾‹——£:{move_distance}m";
     }
 }
