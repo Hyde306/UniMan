@@ -3,10 +3,14 @@ using UnityEngine;
 
 public class BackgroundManager : MonoBehaviour
 {
-    public GameObject[] backgrounds;
+    public GameObject firstBackground; // 最初に生成する固定マップ
+    public GameObject[] backgrounds;   // 2個目以降のランダムマップ
     public DestroyBackground dest;
+
     public float blockHeight = 20f;
     public int startCount = 5;
+
+    private int spawnCount = 0;
 
     void Start()
     {
@@ -36,19 +40,33 @@ public class BackgroundManager : MonoBehaviour
             spawnY = highestY + blockHeight;
         }
 
-        int index = Random.Range(0, backgrounds.Length);
+        GameObject prefab;
+
+        // 最初だけ固定プレハブ、それ以降はランダム
+        if (spawnCount == 0)
+        {
+            prefab = firstBackground;
+        }
+        else
+        {
+            int index = Random.Range(0, backgrounds.Length);
+            prefab = backgrounds[index];
+        }
 
         GameObject spawnedBg = Instantiate(
-            backgrounds[index],
+            prefab,
             new Vector3(0, spawnY, 0),
             Quaternion.identity
         );
 
+        // すべてのマップにAutoScrollを付ける
         if (spawnedBg.GetComponent<AutoScroll>() == null)
         {
             spawnedBg.AddComponent<AutoScroll>();
         }
 
         dest.Dest_ObjList.Add(spawnedBg);
+
+        spawnCount++;
     }
 }

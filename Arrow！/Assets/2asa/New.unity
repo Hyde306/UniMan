@@ -1801,12 +1801,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f0ea14e42f1b64d9fcf1946a9b6506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstBackground: {fileID: 2544964962096094263, guid: 275e19224af201f4bb84e6dac8ba5d74, type: 3}
   backgrounds:
   - {fileID: 2544964962096094263, guid: b7ab43f8641755d4796d905fc26cfaee, type: 3}
   - {fileID: 2544964962096094263, guid: 7ea0aa22b5741b044bfd1b9ac2651866, type: 3}
   - {fileID: 2544964962096094263, guid: 593cf456e21ac214eafe3fc4d075539b, type: 3}
   - {fileID: 2544964962096094263, guid: 6ab166696ee2b4b4ebf7f2d536ca2c3f, type: 3}
   - {fileID: 2544964962096094263, guid: 99f81919532987b4b8099463ffda1f8c, type: 3}
+  - {fileID: 2544964962096094263, guid: 95f516a40cdc77448b82785fbd0d2eae, type: 3}
+  - {fileID: 2544964962096094263, guid: 7c89996875e6a1a478e81d7e3c0ae4ee, type: 3}
   dest: {fileID: 1871617993}
   blockHeight: 10
   startCount: 2
