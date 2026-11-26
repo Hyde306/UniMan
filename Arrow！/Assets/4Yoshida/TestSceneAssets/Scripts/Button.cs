@@ -11,19 +11,14 @@ namespace Yoshida.TestScene
         public void ClickOnButton()
         {
             Time.timeScale = 1f;
+
             if (restartCurrentScene)
             {
-                Scene scene = gameObject.scene;
-#if UNITY_EDITOR
-                UnityEditor.SceneManagement.EditorSceneManager.LoadSceneInPlayMode(
-                    scene.path, new LoadSceneParameters(LoadSceneMode.Single));
-#else
-                SceneManager.LoadScene(scene.buildIndex);
-#endif
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 return;
             }
 
-            SceneManager.LoadScene(sceneName);
+            SceneManager.LoadScene("title");
         }
     }
 }

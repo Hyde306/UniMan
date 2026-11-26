@@ -11,7 +11,7 @@ namespace Yoshida.TestScene
         {
             if (collision.collider.CompareTag(gameOverTag))
             {
-                gameOverManager.GameOver();
+                gameOverManager.GameOver(this);
             }
         }
     }
